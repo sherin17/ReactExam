@@ -28,7 +28,7 @@ const RecipeInfo = require('./models/mongodb')
 //3. API creation
 
 // READ
-app.get('/viewrecipes',async(req,res)=>{
+app.get('/api/viewrecipes',async(req,res)=>{
     try{
       let result = await RecipeInfo.find();
       res.json(result);
@@ -40,7 +40,7 @@ app.get('/viewrecipes',async(req,res)=>{
 
   //post for course
 
-app.post('/createrecipe',(req,res)=>{
+app.post('/api/createrecipe',(req,res)=>{
     try {
         console.log(req.body)//server data
     let recipe = new RecipeInfo(req.body); //passing the data to DB
@@ -55,7 +55,7 @@ app.post('/createrecipe',(req,res)=>{
   
   //UPDATE
 
-  app.post('/updaterecipe',  async (req,res) => {
+  app.post('/api/updaterecipe',  async (req,res) => {
     try{
         let result =  await RecipeInfo.findByIdAndUpdate(req.body._id, req.body);
         res.send("Data Updated");
@@ -66,7 +66,7 @@ app.post('/createrecipe',(req,res)=>{
 })
   //DELETE
 
-app.post('/deleterecipe',async(req,res)=>{
+app.post('/api/deleterecipe',async(req,res)=>{
     try {
       await RecipeInfo.findByIdAndDelete(req.body._id);
     res.send("Data deleted")
@@ -76,17 +76,7 @@ app.post('/deleterecipe',async(req,res)=>{
     
   })
 
-  //SEARCH
-
-app.post('/api/search',async(req,res)=>{
-  try {
-    let result = await RecipeInfo.find(req.body);
-    //let result = await RecipeInfo.find({ "recipename": { $regex: '.' + req.body.recipename + '.' } });
-    res.json(result);
-  } catch (error) {
-    res.status(500).send(error);
-  }
-})
+ 
 
 //Cyclic_Deployment
 
